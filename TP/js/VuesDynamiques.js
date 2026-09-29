@@ -33,8 +33,7 @@ export const TEMPLATE_BADGE_JOUEUR = (nom,score) => `
 `;
 
 // Compléter TEMPLATE_QUIZ
-export const TEMPLATE_QUIZ = (joueur,joueur1,question,reponse) =>
-    `
+export const TEMPLATE_QUIZ = (joueur,joueur1,question,reponse) => `
      <div class="joueur">${joueur}</div>
     <div class="joueur1">${joueur1}</div>
 <div class="question">${question}</div>
@@ -63,7 +62,7 @@ export const TEMPLATE_RESULTAT = (htmlJoueurs, messageGagnant ) => `
         <div class="result-score">
             ${htmlJoueurs}
         </div>
-        <button class="btn btn-restart" id="restartBtn">🔄 Nouvelle partie</button>
+        <button class="btn btn-restart" id="restartBtn">🔄 Nouvelle partie </button>
     </div>
 `;
 
