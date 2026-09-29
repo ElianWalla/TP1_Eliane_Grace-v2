@@ -41,7 +41,7 @@ export const TEMPLATE_QUIZ = (joueur,joueur1,question,reponse) =>
     <div class="reponse">${reponse}</div>
   
             <div>
-            <button class="btn" id="nextBtn">🔄 suivant -></button>
+            <button class="btn" id="nextBtn"> suivant &#8594;</button>
             </div>    
 
 `;
