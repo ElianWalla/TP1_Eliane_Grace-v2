@@ -18,6 +18,7 @@ export const TEMPLATE_BIENVENUE = `
     </div>
 `;
 
+
 export const TEMPLATE_OPTION = (classes, index, lettre, option) => `
     <div class="${classes}" data-index="${index}">
         <span class="letter">${lettre}</span>
