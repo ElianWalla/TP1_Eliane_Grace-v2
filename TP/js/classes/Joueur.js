@@ -5,32 +5,27 @@
  * Représente un joueur avec son nom et son score.
  */
 class Joueur {
-
    #nom;
    #score;
 
    constructor(nom) {
-
        this.#nom = nom;
        this.#score = 0;
    }
-   get getNom () {
 
+   get getNom () {
        return this.#nom;
     }
 
     get getScore () {
-
        return this.#score;
     }
 
     ajouterPoint() {
-
        this.#score++;
     }
 
     reinitialiser () {
-
         this.#score = 0;
     }
 

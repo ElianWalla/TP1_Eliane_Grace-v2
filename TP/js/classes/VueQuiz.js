@@ -80,15 +80,34 @@ export class VueQuiz {
 
     // ---------- Écran de quiz ----------
     #afficheQuiz() {
+        const joueur1 = this.#quiz.joueur;
+        const joueur2 = this.#quiz.autreJoueur;
+        const  questionActuelle = this.#quiz.questionActuelle;
+
+        let reponses = "";
+        for(let i = 0; i<questionActuelle.options.length ;i++){
 
 
+        }
 
+        
+
+this.#conteneur.innerHTML = TEMPLATE_QUIZ(
+    joueur.getNom,
+    joueur2.getNom ,
+    questionActuelle.etiquette,
+    htmlOptions
+
+)
         document.getElementById('nextBtn').addEventListener('click',
             (ev) => {
-                handleQuestionSuivante(ev, quiz)
+                handleQuestionSuivante(ev, this.#quiz)
             }
         );
     }
+
+
+
 
     // ---------- Écran de résultat ----------
     #afficheResultat() {
