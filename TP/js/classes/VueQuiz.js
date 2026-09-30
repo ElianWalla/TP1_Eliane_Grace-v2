@@ -11,6 +11,7 @@ import {
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
 import {Quiz} from "./Quiz.js"
+import {Joueur} from  "./Joueur.js"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
 /**
@@ -107,8 +108,20 @@ export class VueQuiz {
 
     // ---------- Écran de résultat ----------
     #afficheResultat() {
-    //bbbbbbbbbbbbb
+        let noms = this.#nomsJoueurs;
 
+        let joueur1 = Joueur.constructor(noms[0]);
+        let joueur2 = Joueur.constructor(noms[1]);
+
+        const scoreJoueur1 = joueur1.getScore();
+        const scoreJoueur2 = joueur2.getScore();
+
+        this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(b,b,b,b);
+
+        document.getElementById('restartBtn').addEventListener('click', (ev) => {
+                handleRecommancer(ev, this.#quiz)
+            }
+        );
     }
 
 
