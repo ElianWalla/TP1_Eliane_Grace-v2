@@ -13,20 +13,26 @@ export class Question {
      * @param {string[]} data.options - Tableau des 4 propositions
      * @param {number} data.correct - Index de la bonne réponse (0..3)
      */
-    constructor({question, options, correct}) {
-        if(question !== null){
+    constructor(question, options, correct) {
+
+        if (typeof(question) === "string") {
             this.#enonce = question;
         }
-        if(options !==null){
-            this.#options = options;
+
+        if (typeof(options) === "string[4]") {
+            for (i = 0; i < 4; i++) {
+                if(options[i] !== undefined)
+                    this.#options = options;
+            }
         }
-        if(correct >0 && correct<=3){
+
+        if (typeof(correct) === "number" && 4 > correct > 0) {
             this.#indexCorrect = correct;
         }
 
     }
 
-    get etiquette(){
+    get etiquette() {
         return this.#indexCorrect;
 
     }
