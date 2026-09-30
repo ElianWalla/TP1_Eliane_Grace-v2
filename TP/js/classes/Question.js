@@ -20,7 +20,7 @@ class Question {
         if(options !==null){
             this.#options = options;
         }
-        if(correct >0){
+        if(correct >0 && correct<=3){
             this.#indexCorrect = correct;
         }
 
@@ -31,14 +31,12 @@ class Question {
 
     }
     get options(){
-        return this.#indexCorrect;
+        return this.#options;
     }
 
 
     estCorrect(index){
-        if(index===this.#indexCorrect){
-            return true;
-        }
+            return index===this.#indexCorrect;
     }
     /**
      * Retourne la lettre correspondant à un index (A, B, C, D…).
@@ -46,7 +44,7 @@ class Question {
      * @returns {string}
      */
     lettreA(index) {
-       const lettres = ["A","B,","C","D","E","F","G,H","I","J","K",
+       const lettres = ["A","B","C","D","E","F","G","H","I","J","K",
            "L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
             return lettres[index];
 

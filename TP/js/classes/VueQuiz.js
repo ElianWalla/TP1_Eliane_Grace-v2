@@ -81,6 +81,8 @@ export class VueQuiz {
     // ---------- Écran de quiz ----------
     #afficheQuiz() {
 
+
+
         document.getElementById('nextBtn').addEventListener('click',
             (ev) => {
                 handleQuestionSuivante(ev, quiz)
@@ -93,6 +95,7 @@ export class VueQuiz {
 
 
     }
+
 
     // ---------- Utilitaires ----------
     /**
