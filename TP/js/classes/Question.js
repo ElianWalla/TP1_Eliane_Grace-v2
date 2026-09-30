@@ -2,7 +2,7 @@
  * Classe Question
  * Représente une question de quiz avec ses options et la bonne réponse.
  */
-class Question {
+export class Question {
     #enonce;
     #options;
     #indexCorrect;

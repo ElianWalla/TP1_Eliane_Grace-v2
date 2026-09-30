@@ -4,7 +4,7 @@
  * Classe Joueur
  * Représente un joueur avec son nom et son score.
  */
-class Joueur {
+export class Joueur {
    #nom;
    #score;
 

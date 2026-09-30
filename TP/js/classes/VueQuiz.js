@@ -10,6 +10,7 @@ import {
     TEMPLATE_QUIZ,
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
+import {Quiz} from "./Quiz"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
 /**
@@ -90,7 +91,7 @@ export class VueQuiz {
 
         }
 
-        
+
 
 this.#conteneur.innerHTML = TEMPLATE_QUIZ(
     joueur.getNom,
