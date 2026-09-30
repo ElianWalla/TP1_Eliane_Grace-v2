@@ -81,25 +81,20 @@ export class VueQuiz {
 
     // ---------- Écran de quiz ----------
     #afficheQuiz() {
-        const joueur1 = this.#quiz.joueur;
-        const joueur2 = this.#quiz.autreJoueur;
-        const  questionActuelle = this.#quiz.questionActuelle;
-
-        let reponses = "";
-        for(let i = 0; i<questionActuelle.options.length ;i++){
-
-
+        // Construction des choix de rÃ©ponse
+        let htmlOptions = '';
+        for (let i = 0; i < q.options.length; i++) {
+            const option = q.options[i];
+            const classes = this.#determinerClasseAppropriee(i, q, estRepondu, reponseChoisie);
+            htmlOptions += '' + TEMPLATE_OPTION(classes, i, q.lettreA(i), option);
         }
 
+        // Construction des Badges joueurs
 
 
-this.#conteneur.innerHTML = TEMPLATE_QUIZ(
-    joueur.getNom,
-    joueur2.getNom ,
-    questionActuelle.etiquette,
-    htmlOptions
+        // Construction du Quiz avec htmlOptions et les Badges des joueurs
 
-)
+
         document.getElementById('nextBtn').addEventListener('click',
             (ev) => {
                 handleQuestionSuivante(ev, this.#quiz)
@@ -112,7 +107,7 @@ this.#conteneur.innerHTML = TEMPLATE_QUIZ(
 
     // ---------- Écran de résultat ----------
     #afficheResultat() {
-
+    //bbbbbbbbbbbbb
 
     }
 
