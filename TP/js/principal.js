@@ -1,7 +1,19 @@
 import {questionsData} from './donnees.js';
 import {Quiz} from './classes/Quiz.js';
 import {VueQuiz} from './classes/VueQuiz.js';
-import {Question} from 'classes/Question.js';
+import {Question} from './classes/Question.js';
+import {Joueur} from './classes/Joueur.js';
+import {TEMPLATE_OPTION,
+    TEMPLATE_QUIZ,
+    TEMPLATE_RESULTAT,
+    TEMPLATE_BADGE_JOUEUR,
+    TEMPLATE_BIENVENUE,
+    TEMPLATE_JOUEUR_RESULTAT} from './VuesDynamiques.js';
+import {handleChoixDeReponse,
+    handleDemarrer,
+    handleQuestionSuivante,
+    handleRecommancer} from './evenements.js';
+
 
 // --------------------------------------------------------------
 // 1. Instanciation des objets Question

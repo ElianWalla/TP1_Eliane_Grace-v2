@@ -10,7 +10,7 @@ import {
     TEMPLATE_QUIZ,
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
-import {Quiz} from "./Quiz"
+import {Quiz} from "./Quiz.js"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
 /**
