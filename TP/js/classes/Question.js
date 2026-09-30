@@ -29,21 +29,19 @@ export class Question {
         if (typeof(correct) === "number" && 4 > correct > 0) {
             this.#indexCorrect = correct;
         }
-
     }
 
     get etiquette() {
         return this.#indexCorrect;
-
     }
-    get options(){
+    get options() {
         return this.#options;
     }
 
-
-    estCorrect(index){
-            return index===this.#indexCorrect;
+    estCorrect(index) {
+            return index === this.#indexCorrect;
     }
+
     /**
      * Retourne la lettre correspondant à un index (A, B, C, D…).
      * @param {number} index
