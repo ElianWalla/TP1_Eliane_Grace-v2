@@ -33,16 +33,21 @@ export const TEMPLATE_BADGE_JOUEUR = (nom,score) => `
 `;
 
 // Compléter TEMPLATE_QUIZ
-export const TEMPLATE_QUIZ = (joueur,joueur1,question,reponse) => `
-     <div class="joueur">${joueur}</div>
-    <div class="joueur1">${joueur1}</div>
-<div class="question">${question}</div>
+export const TEMPLATE_QUIZ = (joueur1,joueur2,question,reponse) => `
+
+             <div class="welcome-screen">
+        <h1>🧠 Quiz </h1>
+        <p class="subtitle">Tour par tour</p>
+<div class="joueur">${joueur1}</div>
+    <div class="joueur1">${joueur2}</div>
+       
+        <div class="question">${question}</div>
     <div class="reponse">${reponse}</div>
   
             <div>
             <button class="btn" id="nextBtn"> suivant &#8594;</button>
-            </div>    
-
+            </div>  
+      
 `;
 
 
