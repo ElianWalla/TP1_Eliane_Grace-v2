@@ -123,7 +123,7 @@ export class VueQuiz {
         this.#conteneur.innerHTML = TEMPLATE_QUIZ(
             firstPlayer,
             secondPlayer,
-            '(' + quiz.numeroQuestion + ')- ' + q.etiquette,
+            '( ' + quiz.numeroQuestion + ' ) - ' + q.etiquette,
             htmlOptions
         );
 
