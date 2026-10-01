@@ -62,7 +62,7 @@ export const TEMPLATE_QUIZ = (joueur1,joueur2,question,reponse) => `
     
      <div class="error-msg" id="errorMsg"></div>
             <div>
-            <button class="btn btn-start nav-buttons" id="nextBtn"> suivant &#8594;</button>
+            <button class="btn" id="nextBtn"> suivant &#8594;</button>
             </div>  
          
     
