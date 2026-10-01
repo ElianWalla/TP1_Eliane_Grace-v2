@@ -27,10 +27,17 @@ export const TEMPLATE_OPTION = (classes, index, lettre, option) => `
 `;
 
 // Compléter TEMPLATE_BADGE_JOUEUR
-export const TEMPLATE_BADGE_JOUEUR = (nom,score) => `
+export const TEMPLATE_BADGE_JOUEUR = (joueur1,joueur2 ,score1,score2) => `
 
-<div class="name" >${nom}</div>
-<div class="score">${score}</div>
+<div class="joueur1" >${joueur1}</div>
+<div class="score1">${score1}</div>
+<div class="joueur2" >${joueur2}</div>
+<div class="score2">${score2}</div>
+
+
+
+ 
+
 `;
 
 // Compléter TEMPLATE_QUIZ
@@ -39,15 +46,26 @@ export const TEMPLATE_QUIZ = (joueur1,joueur2,question,reponse) => `
              <div class="welcome-screen">
         <h1>🧠 Quiz </h1>
         <p class="subtitle">Tour par tour</p>
-<div class="joueur">${joueur1}</div>
-    <div class="joueur1">${joueur2}</div>
+        
+        <div class="player-input-group">
+            <div class="player-input-box">
+                <label for="player1">${joueur1}</label>
+          </div>
+            <div class="player-input-box">
+                <label for="player2">${joueur2}</label>
+       
+            </div>
+        </div>
        
         <div class="question">${question}</div>
     <div class="reponse">${reponse}</div>
-  
+    
+     <div class="error-msg" id="errorMsg"></div>
             <div>
-            <button class="btn" id="nextBtn"> suivant &#8594;</button>
+            <button class="btn btn-start nav-buttons" id="nextBtn"> suivant &#8594;</button>
             </div>  
+         
+    
       
 `;
 

@@ -13,46 +13,52 @@ export class Question {
      * @param {string[]} data.options - Tableau des 4 propositions
      * @param {number} data.correct - Index de la bonne réponse (0..3)
      */
-    constructor(question, options, correct) {
+    constructor({question, options, correct}) {
 
-        if (typeof(question) === "string") {
+        if (typeof (question) === "string") {
             this.#enonce = question;
         }
 
-        if (typeof(options) === "string[4]") {
-            for (i = 0; i < 4; i++) {
-                if(options[i] !== undefined)
-                    this.#options = options;
-            }
+        if (options.length === 4) {
+            this.#options = options;
         }
 
-        if (typeof(correct) === "number" && 4 > correct > 0) {
+        if (typeof (correct) === "number" && correct >= 0 && correct < 4) {
             this.#indexCorrect = correct;
         }
 
     }
 
     get etiquette() {
-        return this.#indexCorrect;
+        return this.#enonce;
 
     }
-    get options(){
+
+    get options() {
         return this.#options;
     }
 
-
-    estCorrect(index){
-            return index===this.#indexCorrect;
+    get enonce() {
+        return this.#enonce;
     }
+
+    get indexCorrect() {
+        return this.#indexCorrect;
+    }
+
+    estCorrect(index) {
+        return index === this.#indexCorrect;
+    }
+
     /**
      * Retourne la lettre correspondant à un index (A, B, C, D…).
      * @param {number} index
      * @returns {string}
      */
     lettreA(index) {
-       const lettres = ["A","B","C","D","E","F","G","H","I","J","K",
-           "L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-            return lettres[index];
+        const lettres = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+            "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        return lettres[index];
 
     }
 }
