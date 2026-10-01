@@ -11,7 +11,7 @@ import {
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
 import {Quiz} from "./Quiz.js"
-import {Joueur} from  "./Joueur.js"
+import {Joueur} from "./Joueur.js"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
 /**
@@ -66,7 +66,7 @@ export class VueQuiz {
     #afficheBienvenue() {
         this.#conteneur.innerHTML = TEMPLATE_BIENVENUE;
         document.getElementById('startBtn').addEventListener('click', (ev) => {
-        handleDemarrer(ev, this)
+            handleDemarrer(ev, this)
 
         });
 
@@ -82,16 +82,16 @@ export class VueQuiz {
         }
 
 
-
     }
 
     // ---------- Écran de quiz ----------
     #afficheQuiz() {
         // Construction des choix de reponse
-        const  quiz = this.#quiz;
-        const q = quiz.questionActuelle;
-        const  estRepondu = quiz.estRepondu;
-        const reponseChoisie = quiz.reponseChoisie;
+        let quiz = this.#quiz;
+        let q = quiz.questionActuelle;
+        let estRepondu = quiz.estRepondu;
+        let reponseChoisie = quiz.reponseChoisie;
+        let score = quiz.joueurActuel;
 
         let htmlOptions = '';
         for (let i = 0; i < q.options.length; i++) {
@@ -100,23 +100,28 @@ export class VueQuiz {
             htmlOptions += '' + TEMPLATE_OPTION(classes, i, q.lettreA(i), option);
         }
 
-        // Construction des Badges joueurs
-
-        this.#conteneur.innerHTML = TEMPLATE_BADGE_JOUEUR(
-            this.#nomsJoueurs[0],
-            this.getScore,
-            this.#nomsJoueurs[1],
-            this.getScore
-        );
-
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
         this.#conteneur.innerHTML = TEMPLATE_QUIZ(
-        this.#nomsJoueurs[0],
-        this.#nomsJoueurs[1],
-            '(' + q.options  + ')- '+   q.enonce,
-            htmlOptions
+            this.#nomsJoueurs[0],
+            this.#nomsJoueurs[1],
+            '(' + q.indexQuestionActuelle + ') - ' + q.enonce,
+            htmlOptions,
+        );
 
-    );
+        // Construction des Badges joueurs
+        let div = document.getElementById('corps');
+        // this.#conteneur.innerHTML = TEMPLATE_BADGE_JOUEUR(
+        //     quiz.joueurs[0],
+        //     quiz.joueurs[1]
+        //
+        // );
+        div.insertAdjacentHTML("afterbegin", TEMPLATE_BADGE_JOUEUR(quiz.joueurs[0], quiz.joueurs[1]));
+
+        div =document.getElementById('player-badge');
+        div.addEventListener('click' ,() =>{
+         div.textContent ='🎯 À vous ! ';
+        })
+
 
         document.getElementById('nextBtn').addEventListener('click',
             (ev) => {
@@ -124,8 +129,6 @@ export class VueQuiz {
             }
         );
     }
-
-
 
 
     // ---------- Écran de résultat ----------
@@ -143,25 +146,25 @@ export class VueQuiz {
         let winner = false;
         let icone = '';
 
-       if (scoreJoueur1 === scoreJoueur2) {
-           //?????
+        if (scoreJoueur1 === scoreJoueur2) {
+            //?????
 
-       } else if (scoreJoueur1 > scoreJoueur2) {
+        } else if (scoreJoueur1 > scoreJoueur2) {
 
-           nom = joueur1.getNom();
-           score = scoreJoueur1;
-           winner = true;
-           icone = '&#127942;';
+            nom = joueur1.getNom();
+            score = scoreJoueur1;
+            winner = true;
+            icone = '&#127942;';
 
-       } else if (scoreJoueur1 < scoreJoueur2) {
+        } else if (scoreJoueur1 < scoreJoueur2) {
 
-           nom = joueur2.getNom();
-           score = scoreJoueur2;
-           winner = true;
-           icone = '&#127942;';
-       }
+            nom = joueur2.getNom();
+            score = scoreJoueur2;
+            winner = true;
+            icone = '&#127942;';
+        }
 
-        this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(nom,score,winner,icone);
+        this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(nom, score, winner, icone);
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, this.#quiz)

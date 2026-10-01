@@ -138,6 +138,7 @@ export class Quiz {
      */
     suivant() {
 
+
     }
 
     /**
