@@ -116,7 +116,30 @@ export class VueQuiz {
         const scoreJoueur1 = joueur1.getScore();
         const scoreJoueur2 = joueur2.getScore();
 
-        this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(b,b,b,b);
+        let nom = "";
+        let score = 0;
+        let winner = false;
+        let icone = '';
+
+       if (scoreJoueur1 === scoreJoueur2) {
+           //?????
+
+       } else if (scoreJoueur1 > scoreJoueur2) {
+
+           nom = joueur1.getNom();
+           score = scoreJoueur1;
+           winner = true;
+           icone = '&#127942;';
+
+       } else if (scoreJoueur1 < scoreJoueur2) {
+
+           nom = joueur2.getNom();
+           score = scoreJoueur2;
+           winner = true;
+           icone = '&#127942;';
+       }
+
+        this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(nom,score,winner,icone);
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, this.#quiz)
