@@ -31,15 +31,10 @@ export class Question {
 
     get etiquette() {
         return this.#enonce;
-
     }
 
     get options() {
         return this.#options;
-    }
-
-    get enonce() {
-        return this.#enonce;
     }
 
     get indexCorrect() {
@@ -58,7 +53,7 @@ export class Question {
     lettreA(index) {
         const lettres = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
             "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-        return lettres[index];
 
+        return lettres[index];
     }
 }

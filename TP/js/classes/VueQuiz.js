@@ -11,7 +11,7 @@ import {
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
 import {Quiz} from "./Quiz.js"
-import {Joueur} from "./Joueur.js"
+import {Joueur} from  "./Joueur.js"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
 /**
@@ -66,7 +66,7 @@ export class VueQuiz {
     #afficheBienvenue() {
         this.#conteneur.innerHTML = TEMPLATE_BIENVENUE;
         document.getElementById('startBtn').addEventListener('click', (ev) => {
-            handleDemarrer(ev, this)
+        handleDemarrer(ev, this)
 
         });
 
@@ -80,6 +80,7 @@ export class VueQuiz {
         if (champJoueur2 && this.#nomsJoueurs[1]) {
             champJoueur2.value = this.#nomsJoueurs[1];
         }
+
 
 
     }
@@ -100,32 +101,37 @@ export class VueQuiz {
             htmlOptions += '' + TEMPLATE_OPTION(classes, i, q.lettreA(i), option);
         }
 
-        // Construction du Quiz avec htmlOptions et les Badges des joueurs
-        this.#conteneur.innerHTML = TEMPLATE_QUIZ(
-            this.#nomsJoueurs[0],
-            this.#nomsJoueurs[1],
-            '(' + q.indexQuestionActuelle + ') - ' + q.enonce,
-            htmlOptions,
+        // Construction des Badges joueurs
+        let activePlayer;
+
+        activePlayer = quiz.indexJoueurActuel === quiz.joueurs[0];
+
+        const firstPlayer = TEMPLATE_BADGE_JOUEUR(
+            activePlayer,
+            quiz.joueurActuel.getNom,
+            quiz.joueurActuel.getScore
         );
 
-        // Construction des Badges joueurs
-        let div = document.getElementById('corps');
-        // this.#conteneur.innerHTML = TEMPLATE_BADGE_JOUEUR(
-        //     quiz.joueurs[0],
-        //     quiz.joueurs[1]
-        //
-        // );
-        div.insertAdjacentHTML("afterbegin", TEMPLATE_BADGE_JOUEUR(quiz.joueurs[0], quiz.joueurs[1]));
+        activePlayer = quiz.indexJoueurActuel === quiz.joueurs[1];
 
-        div =document.getElementById('player-badge');
-        div.addEventListener('click' ,() =>{
-         div.textContent ='🎯 À vous ! ';
-        })
+        const secondPlayer = TEMPLATE_BADGE_JOUEUR(
+            activePlayer,
+            quiz.autreJoueur.getNom,
+            quiz.autreJoueur.getScore
+        );
 
+        // Construction du Quiz avec htmlOptions et les Badges des joueurs
+        this.#conteneur.innerHTML = TEMPLATE_QUIZ(
+            firstPlayer,
+            secondPlayer,
+            '( ' + quiz.numeroQuestion + ' ) - ' + q.etiquette,
+            htmlOptions
+        );
 
-        document.getElementById('nextBtn').addEventListener('click',
-            (ev) => {
-                handleQuestionSuivante(ev, quiz)
+        //TODO La correction des reponses et l'affichage de la question suivante
+
+        document.getElementById('nextBtn').addEventListener('click', (ev) => {
+                handleQuestionSuivante(ev, this)
             }
         );
     }
@@ -146,23 +152,34 @@ export class VueQuiz {
         let winner = false;
         let icone = '';
 
-        if (scoreJoueur1 === scoreJoueur2) {
-            //?????
-
-        } else if (scoreJoueur1 > scoreJoueur2) {
+        if (scoreJoueur1 === scoreJoueur2 + 2) {
 
             nom = joueur1.getNom();
             score = scoreJoueur1;
             winner = true;
             icone = '&#127942;';
 
-        } else if (scoreJoueur1 < scoreJoueur2) {
+        } else if (scoreJoueur2 === scoreJoueur1 + 2) {
 
             nom = joueur2.getNom();
             score = scoreJoueur2;
             winner = true;
             icone = '&#127942;';
-        }
+
+       } else if (scoreJoueur1 > scoreJoueur2) {
+
+           nom = joueur1.getNom();
+           score = scoreJoueur1;
+           winner = true;
+           icone = '&#127942;';
+
+        } else if (scoreJoueur2 > scoreJoueur1) {
+
+           nom = joueur2.getNom();
+           score = scoreJoueur2;
+           winner = true;
+           icone = '&#127942;';
+       }
 
         this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(nom, score, winner, icone);
 
