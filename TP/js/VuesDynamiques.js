@@ -27,46 +27,38 @@ export const TEMPLATE_OPTION = (classes, index, lettre, option) => `
 `;
 
 // Compléter TEMPLATE_BADGE_JOUEUR
-export const TEMPLATE_BADGE_JOUEUR = (joueur1,joueur2 ,score1,score2) => `
+export const TEMPLATE_BADGE_JOUEUR = (joueur1, joueur2, score1, score2) => `
 
 <div class="joueur1" >${joueur1}</div>
 <div class="score1">${score1}</div>
 <div class="joueur2" >${joueur2}</div>
 <div class="score2">${score2}</div>
 
-
-
- 
-
 `;
 
 // Compléter TEMPLATE_QUIZ
-export const TEMPLATE_QUIZ = (joueur1,joueur2,question,reponse) => `
-
-             <div class="welcome-screen">
-        <h1>🧠 Quiz </h1>
-        <p class="subtitle">Tour par tour</p>
+export const TEMPLATE_QUIZ = (joueur1, joueur2, question, option) => `
+             
+    <h1>🧠 Quiz </h1>
+    <p class="subtitle">Tour par tour</p>
         
-        <div class="player-input-group">
+    <div class="player-input-group">
             <div class="player-input-box">
-                <label for="player1">${joueur1}</label>
-          </div>
+                <div class="player-badge" >${joueur1}</div>
+            </div>
             <div class="player-input-box">
-                <label for="player2">${joueur2}</label>
-       
+                <div class="player-badge" >${joueur2}</div>
             </div>
         </div>
-       
-        <div class="question">${question}</div>
-    <div class="reponse">${reponse}</div>
-    
-     <div class="error-msg" id="errorMsg"></div>
-            <div>
-            <button class="btn" id="nextBtn"> suivant &#8594;</button>
-            </div>  
+        
+        <div class="question-text">${question}</div>
+        <div class="option-grid">${option}</div>
+        <div class="error-msg" id="errorMsg"></div>
+    </div>
+    <div>
+    <button class="btn btn-next nav-buttons" id="nextBtn">Suivant →</button>
+</div>
          
-    
-      
 `;
 
 
@@ -77,7 +69,7 @@ export const TEMPLATE_JOUEUR_RESULTAT = (nom, score, estGagnant, htmlIcones = ''
     </div>
 `;
 
-export const TEMPLATE_RESULTAT = (htmlJoueurs, messageGagnant ) => `
+export const TEMPLATE_RESULTAT = (htmlJoueurs, messageGagnant) => `
     <h1>🧠 Quiz</h1>
     <p class="subtitle">Résultat final</p>
 
@@ -86,7 +78,7 @@ export const TEMPLATE_RESULTAT = (htmlJoueurs, messageGagnant ) => `
         <div class="result-score">
             ${htmlJoueurs}
         </div>
-        <button class="btn btn-restart" id="restartBtn">🔄 Nouvelle partie </button>
+        <button class="btn btn-restart" id="restartBtn">🔄 Nouvelle partie</button>
     </div>
 `;
 

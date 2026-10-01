@@ -112,7 +112,7 @@ export class VueQuiz {
         this.#conteneur.innerHTML = TEMPLATE_QUIZ(
             this.#nomsJoueurs[0],
             this.#nomsJoueurs[1],
-            '(' + q.options + ')- ' + q.enonce,
+            '(' + q.questionActuelle + ')- ' + q.enonce,
             htmlOptions
         );
 
