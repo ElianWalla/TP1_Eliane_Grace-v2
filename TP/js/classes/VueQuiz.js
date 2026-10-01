@@ -65,8 +65,10 @@ export class VueQuiz {
     #afficheBienvenue() {
         this.#conteneur.innerHTML = TEMPLATE_BIENVENUE;
         document.getElementById('startBtn').addEventListener('click', (ev) => {
-            handleDemarrer(ev, this)
+        handleDemarrer(ev, this)
+
         });
+
 
         const champJoueur1 = this.#conteneur.querySelector('#player1');
         const champJoueur2 = this.#conteneur.querySelector('#player2');
@@ -77,11 +79,19 @@ export class VueQuiz {
         if (champJoueur2 && this.#nomsJoueurs[1]) {
             champJoueur2.value = this.#nomsJoueurs[1];
         }
+
+
+
     }
 
     // ---------- Écran de quiz ----------
     #afficheQuiz() {
-        // Construction des choix de rÃ©ponse
+        // Construction des choix de reponse
+        const  quiz = this.#quiz;
+        const q = quiz.questionActuelle;
+        const  estRepondu = quiz.estRepondu;
+        const reponseChoisie = quiz.reponseChoisie;
+
         let htmlOptions = '';
         for (let i = 0; i < q.options.length; i++) {
             const option = q.options[i];
@@ -91,13 +101,25 @@ export class VueQuiz {
 
         // Construction des Badges joueurs
 
+        this.#conteneur.innerHTML = TEMPLATE_BADGE_JOUEUR(
+            this.#nomsJoueurs[0],
+            this.getScore,
+            this.#nomsJoueurs[1],
+            this.getScore
+        );
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
+        this.#conteneur.innerHTML = TEMPLATE_QUIZ(
+        this.#nomsJoueurs[0],
+        this.#nomsJoueurs[1],
+            '(' + q.options  + ')- '+   q.enonce,
+            htmlOptions
 
+    );
 
         document.getElementById('nextBtn').addEventListener('click',
             (ev) => {
-                handleQuestionSuivante(ev, this.#quiz)
+                handleQuestionSuivante(ev, quiz)
             }
         );
     }
