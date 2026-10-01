@@ -27,38 +27,32 @@ export const TEMPLATE_OPTION = (classes, index, lettre, option) => `
 `;
 
 // Compléter TEMPLATE_BADGE_JOUEUR
-export const TEMPLATE_BADGE_JOUEUR = (joueur1, joueur2, score1, score2) => `
+export const TEMPLATE_BADGE_JOUEUR = (badge, joueur, score) => `
 
-<div class="joueur1" >${joueur1}</div>
-<div class="score1">${score1}</div>
-<div class="joueur2" >${joueur2}</div>
-<div class="score2">${score2}</div>
-
+<div class="player-badge ${badge ? 'active' : ''}">
+    <div class="name">${joueur}</div>
+    <div class="score">${score}</div>
+</div>
 `;
 
 // Compléter TEMPLATE_QUIZ
 export const TEMPLATE_QUIZ = (joueur1, joueur2, question, option) => `
              
-    <h1>🧠 Quiz </h1>
-    <p class="subtitle">Tour par tour</p>
-        
-    <div class="player-input-group">
-            <div class="player-input-box">
-                <div class="player-badge" >${joueur1}</div>
-            </div>
-            <div class="player-input-box">
-                <div class="player-badge" >${joueur2}</div>
-            </div>
-        </div>
-        
-        <div class="question-text">${question}</div>
-        <div class="option-grid">${option}</div>
-        <div class="error-msg" id="errorMsg"></div>
-    </div>
-    <div>
-    <button class="btn btn-next nav-buttons" id="nextBtn">Suivant →</button>
+<h1>🧠 Quiz </h1>
+<p class="subtitle">Tour par tour</p>
+             
+<div class="progress-container">
+    <div class="players-status">${joueur1}</div>          
+    <div class="players-status">${joueur2}</div>
 </div>
-         
+
+<div class="question-text">${question}</div>
+<div>
+    <div class="options-grid">${option}</div>
+</div>
+<div class="nav-buttons">
+    <button class="btn btn-next" id="nextBtn">Suivant →</button>
+</div>     
 `;
 
 
@@ -75,10 +69,8 @@ export const TEMPLATE_RESULTAT = (htmlJoueurs, messageGagnant) => `
 
     <div class="result-container">
         <div class="result-message">${messageGagnant}</div>
-        <div class="result-score">
-            ${htmlJoueurs}
-        </div>
-        <button class="btn btn-restart" id="restartBtn">🔄 Nouvelle partie</button>
+        <div class="result-score">${htmlJoueurs}</div>
+        <button class="btn btn-restart" id="restartBtn">🔄 Nouvelle partie </button>
     </div>
 `;
 

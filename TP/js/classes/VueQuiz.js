@@ -67,7 +67,6 @@ export class VueQuiz {
         this.#conteneur.innerHTML = TEMPLATE_BIENVENUE;
         document.getElementById('startBtn').addEventListener('click', (ev) => {
             handleDemarrer(ev, this)
-
         });
 
 
@@ -93,32 +92,45 @@ export class VueQuiz {
         const reponseChoisie = quiz.reponseChoisie;
 
         let htmlOptions = '';
-        for (let i = 0; i < q.options.length; i++) {
-            const option = q.options[i];
-            const classes = this.#determinerClasseAppropriee(i, q, estRepondu, reponseChoisie);
+
+        for (let i = 0 ; i < q.options.length ; i++) {
+
+            let option = q.options[i];
+            let classes = this.#determinerClasseAppropriee(i, q, estRepondu, reponseChoisie);
             htmlOptions += '' + TEMPLATE_OPTION(classes, i, q.lettreA(i), option);
         }
 
         // Construction des Badges joueurs
+        let activePlayer;
 
-        this.#conteneur.innerHTML = TEMPLATE_BADGE_JOUEUR(
-            this.#nomsJoueurs[0],
-            this.getScore,
-            this.#nomsJoueurs[1],
-            this.getScore
+        activePlayer = quiz.indexJoueurActuel === quiz.joueurs[0];
+
+        const firstPlayer = TEMPLATE_BADGE_JOUEUR(
+            activePlayer,
+            quiz.joueurActuel.getNom,
+            quiz.joueurActuel.getScore
+        );
+
+        activePlayer = quiz.indexJoueurActuel === quiz.joueurs[1];
+
+        const secondPlayer = TEMPLATE_BADGE_JOUEUR(
+            activePlayer,
+            quiz.autreJoueur.getNom,
+            quiz.autreJoueur.getScore
         );
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
         this.#conteneur.innerHTML = TEMPLATE_QUIZ(
-            this.#nomsJoueurs[0],
-            this.#nomsJoueurs[1],
-            '(' + q.questionActuelle + ')- ' + q.enonce,
+            firstPlayer,
+            secondPlayer,
+            '(' + quiz.numeroQuestion + ')- ' + q.etiquette,
             htmlOptions
         );
 
-        document.getElementById('nextBtn').addEventListener('click',
-            (ev) => {
-                handleQuestionSuivante(ev, quiz)
+        //TODO La correction des reponses et l'affichage de la question suivante
+
+        document.getElementById('nextBtn').addEventListener('click', (ev) => {
+                handleQuestionSuivante(ev, this)
             }
         );
     }
