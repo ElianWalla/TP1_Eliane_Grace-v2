@@ -58,6 +58,7 @@ export const TEMPLATE_JOUEUR_RESULTAT = (nom, score, estGagnant, htmlIcones) => 
     <div class="result-player ${estGagnant ? 'winner' : ''}">
         <div class="name">${nom}</div>
         <div class="score">${score}</div>
+        ${htmlIcones}
     </div>
 `;
 

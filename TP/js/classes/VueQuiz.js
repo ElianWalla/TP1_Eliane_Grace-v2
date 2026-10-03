@@ -89,7 +89,6 @@ export class VueQuiz {
         let q = quiz.questionActuelle;
         let estRepondu = quiz.estRepondu;
         let reponseChoisie = quiz.reponseChoisie;
-        let score = quiz.joueurActuel;
         let htmlOptions = '';
 
         for (let i = 0; i < q.options.length; i++) {
@@ -100,18 +99,18 @@ export class VueQuiz {
         }
 
         // Construction des Badges joueurs
-       let  activePlayer = quiz.indexJoueurActuel === 0;
-        const firstPlayer = TEMPLATE_BADGE_JOUEUR(
+        let activePlayer = quiz.indexJoueurActuel === 0;
+        let firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
-            quiz.joueurActuel.getNom,
-            quiz.joueurActuel.getScore
+            quiz.joueurs[0].getNom,
+            quiz.joueurs[0].getScore
         );
 
         let activePlayer2 = quiz.indexJoueurActuel === 1;
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer2,
-            quiz.autreJoueur.getNom,
-            quiz.autreJoueur.getScore
+            quiz.joueurs[1].getNom,
+            quiz.joueurs[1].getScore
         );
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
@@ -146,8 +145,8 @@ export class VueQuiz {
     #afficheResultat() {
         const quiz = this.#quiz;
 
-        const joueur1 = quiz.joueurActuel;
-        const joueur2 = quiz.autreJoueur;
+        const joueur1 = quiz.joueurs[0];
+        const joueur2 = quiz.joueurs[1];
 
         let scoreJoueur1 = joueur1.getScore;
         let scoreJoueur2 = joueur2.getScore;
@@ -163,22 +162,24 @@ export class VueQuiz {
         if (scoreJoueur1 === scoreJoueur2 + 2) {
 
             nom = joueur1.getNom();
-            score = scoreJoueur1;
             winner = true;
             message = icone + ' ' + nom + " remporte la partie !";
 
             gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, winner, icone);
             perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, false, '');
 
+            quiz.estTermine;
+
         } else if (scoreJoueur2 === scoreJoueur1 + 2) {
 
             nom = joueur2.getNom();
-            score = scoreJoueur2;
             winner = true;
             message = icone + ' ' + nom + " remporte la partie !";
 
             gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, winner, icone);
             perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, false, '');
+
+            quiz.estTermine;
        }
 
         let verdict = [gagnant,perdant];
@@ -186,6 +187,7 @@ export class VueQuiz {
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, quiz)
+                quiz.reinitialiser()
             }
         );
     }
