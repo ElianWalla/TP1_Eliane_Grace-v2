@@ -25,6 +25,8 @@ export function handleChoixDeReponse(ev, quiz) {
 // A COMPLÉTER
     const boutonOption = ev.target;
     const index = parseInt(boutonOption.dataset.index, 10);
+    // appeler de la methode repondre dans la classe Quiz.js
+    quiz.repondre(index);
 }
 
 export function handleQuestionSuivante(ev, quiz) {
