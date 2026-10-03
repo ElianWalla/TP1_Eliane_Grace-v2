@@ -159,6 +159,8 @@ export class VueQuiz {
             gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, winner, icone);
             perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, false, '');
 
+            quiz.estTermine;
+
         } else if (scoreJoueur2 === scoreJoueur1 + 2) {
 
             nom = joueur2.getNom();
@@ -167,6 +169,8 @@ export class VueQuiz {
 
             gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, winner, icone);
             perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, false, '');
+
+            quiz.estTermine;
        }
 
         let verdict = [gagnant,perdant];
