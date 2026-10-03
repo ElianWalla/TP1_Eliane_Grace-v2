@@ -1,7 +1,7 @@
 // =============================================================================
 // Templates HTML (Constantes)
 // =============================================================================
-
+"use strict";
 import {
     TEMPLATE_OPTION,
     TEMPLATE_RESULTAT,
@@ -89,7 +89,6 @@ export class VueQuiz {
         let q = quiz.questionActuelle;
         let estRepondu = quiz.estRepondu;
         let reponseChoisie = quiz.reponseChoisie;
-        let score = quiz.joueurActuel;
 
         let htmlOptions = '';
         for (let i = 0; i < q.options.length; i++) {
@@ -99,20 +98,30 @@ export class VueQuiz {
         }
 
         // Construction des Badges joueurs
-       let  activePlayer = quiz.indexJoueurActuel === quiz.joueurs[0];
+        let sousTitre = ``;
+
+       let  activePlayer = (quiz.indexJoueurActuel === quiz.joueurs[0]);
+        if (activePlayer === true) {
+            sousTitre = `<p class="subtitle">🎯 À vous !</p>`;
+        }
 
         const firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
             quiz.joueurActuel.getNom,
-            quiz.joueurActuel.getScore
+            quiz.joueurActuel.getScore,
+            sousTitre
         );
 
-      let activePlayer2 = quiz.indexJoueurActuel === quiz.joueurs[1];
+      let activePlayer2 = (quiz.indexJoueurActuel === quiz.joueurs[1]);
+      if (activePlayer2 === true) {
+          sousTitre = `<p class="subtitle">🎯 À vous !</p>`;
+      }
 
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer2,
             quiz.autreJoueur.getNom,
-            quiz.autreJoueur.getScore
+            quiz.autreJoueur.getScore,
+            sousTitre
         );
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
@@ -135,13 +144,13 @@ export class VueQuiz {
 
     // ---------- Écran de résultat ----------
     #afficheResultat() {
-        let noms = this.#nomsJoueurs;
+        const quiz = this.#quiz;
 
-        let joueur1 = Joueur.constructor(noms[0]);
-        let joueur2 = Joueur.constructor(noms[1]);
+        const joueur1 = quiz.joueurActuel;
+        const joueur2 = quiz.autreJoueur;
 
-        const scoreJoueur1 = joueur1.getScore();
-        const scoreJoueur2 = joueur2.getScore();
+        let scoreJoueur1 = quiz.joueurActuel.getScore;
+        let scoreJoueur2 = quiz.autreJoueur.getScore;
 
         let nom = "";
         let score = 0;
@@ -161,20 +170,6 @@ export class VueQuiz {
             score = scoreJoueur2;
             winner = true;
             icone = '&#127942;';
-
-       } else if (scoreJoueur1 > scoreJoueur2) {
-
-           nom = joueur1.getNom();
-           score = scoreJoueur1;
-           winner = true;
-           icone = '&#127942;';
-
-        } else if (scoreJoueur2 > scoreJoueur1) {
-
-           nom = joueur2.getNom();
-           score = scoreJoueur2;
-           winner = true;
-           icone = '&#127942;';
        }
 
         this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(nom, score, winner, icone);
