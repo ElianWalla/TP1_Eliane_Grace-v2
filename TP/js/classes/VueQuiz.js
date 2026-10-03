@@ -90,30 +90,30 @@ export class VueQuiz {
         let estRepondu = quiz.estRepondu;
         let reponseChoisie = quiz.reponseChoisie;
         let score = quiz.joueurActuel;
-
         let htmlOptions = '';
+
         for (let i = 0; i < q.options.length; i++) {
+
             const option = q.options[i];
             const classes = this.#determinerClasseAppropriee(i, q, estRepondu, reponseChoisie);
             htmlOptions += '' + TEMPLATE_OPTION(classes, i, q.lettreA(i), option);
         }
 
         // Construction des Badges joueurs
-       let  activePlayer = quiz.indexJoueurActuel === quiz.joueurs[0];
-
+       let  activePlayer = quiz.indexJoueurActuel === 0;
         const firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
             quiz.joueurActuel.getNom,
             quiz.joueurActuel.getScore
         );
 
-      let activePlayer2 = quiz.indexJoueurActuel === quiz.joueurs[1];
-
+        let activePlayer2 = quiz.indexJoueurActuel === 1;
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer2,
             quiz.autreJoueur.getNom,
             quiz.autreJoueur.getScore
         );
+
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
         this.#conteneur.innerHTML = TEMPLATE_QUIZ(
@@ -125,11 +125,20 @@ export class VueQuiz {
 
 
         //TODO La correction des reponses et l'affichage de la question suivante
-
         document.getElementById('nextBtn').addEventListener('click', (ev) => {
                 handleQuestionSuivante(ev, this.#quiz)
             }
         );
+
+        const options = this.#conteneur.querySelectorAll('.option-btn');
+        options.forEach((options) =>{
+            options.addEventListener('click' ,(ev) =>{
+                handleChoixDeReponse(ev,quiz);
+            })
+        });
+
+
+
     }
 
 
