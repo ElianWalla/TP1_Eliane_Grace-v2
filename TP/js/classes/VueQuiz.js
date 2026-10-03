@@ -1,7 +1,7 @@
 // =============================================================================
 // Templates HTML (Constantes)
 // =============================================================================
-"use strict";
+
 import {
     TEMPLATE_OPTION,
     TEMPLATE_RESULTAT,
@@ -89,25 +89,25 @@ export class VueQuiz {
         let q = quiz.questionActuelle;
         let estRepondu = quiz.estRepondu;
         let reponseChoisie = quiz.reponseChoisie;
-
+        let score = quiz.joueurActuel;
         let htmlOptions = '';
+
         for (let i = 0; i < q.options.length; i++) {
+
             const option = q.options[i];
             const classes = this.#determinerClasseAppropriee(i, q, estRepondu, reponseChoisie);
             htmlOptions += '' + TEMPLATE_OPTION(classes, i, q.lettreA(i), option);
         }
 
         // Construction des Badges joueurs
-        let activePlayer = (quiz.indexJoueurActuel === 0);
-        let activePlayer2 = (quiz.indexJoueurActuel === 1);
-
+       let  activePlayer = quiz.indexJoueurActuel === 0;
         const firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
             quiz.joueurActuel.getNom,
             quiz.joueurActuel.getScore
         );
 
-
+        let activePlayer2 = quiz.indexJoueurActuel === 1;
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer2,
             quiz.autreJoueur.getNom,
@@ -129,6 +129,16 @@ export class VueQuiz {
                 handleQuestionSuivante(ev, this.#quiz)
             }
         );
+
+        const options = this.#conteneur.querySelectorAll('.option-btn');
+        options.forEach((options) =>{
+            options.addEventListener('click' ,(ev) =>{
+                handleChoixDeReponse(ev,quiz);
+            })
+        });
+
+
+
     }
 
 
@@ -153,6 +163,7 @@ export class VueQuiz {
         if (scoreJoueur1 === scoreJoueur2 + 2) {
 
             nom = joueur1.getNom();
+            score = scoreJoueur1;
             winner = true;
             message = icone + ' ' + nom + " remporte la partie !";
 
@@ -164,6 +175,7 @@ export class VueQuiz {
         } else if (scoreJoueur2 === scoreJoueur1 + 2) {
 
             nom = joueur2.getNom();
+            score = scoreJoueur2;
             winner = true;
             message = icone + ' ' + nom + " remporte la partie !";
 
