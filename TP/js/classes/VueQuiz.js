@@ -136,8 +136,8 @@ export class VueQuiz {
     #afficheResultat() {
         const quiz = this.#quiz;
 
-        const joueur1 = quiz.joueurActuel;
-        const joueur2 = quiz.autreJoueur;
+        const joueur1 = quiz.joueurs[0];
+        const joueur2 = quiz.joueurs[1];
 
         let scoreJoueur1 = joueur1.getScore;
         let scoreJoueur2 = joueur2.getScore;
@@ -178,6 +178,7 @@ export class VueQuiz {
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, quiz)
+                quiz.reinitialiser()
             }
         );
     }
