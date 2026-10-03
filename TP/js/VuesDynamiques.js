@@ -29,9 +29,12 @@ export const TEMPLATE_OPTION = (classes, index, lettre, option) => `
 // Compléter TEMPLATE_BADGE_JOUEUR
 export const TEMPLATE_BADGE_JOUEUR = (badge, joueur, score) => `
 
-<div class="player-badge ${badge ? 'active' : ''}">
+<div class="player-badge ${badge ? 'active' : ''}" >
     <div class="name">${joueur}</div>
     <div class="score">${score}</div>
+    ${badge ? ' <span>🎯 À vous !</span>' : ''}
+   
+   
 </div>
 `;
 
@@ -40,12 +43,9 @@ export const TEMPLATE_QUIZ = (joueur1, joueur2, question, option) => `
              
 <h1>🧠 Quiz </h1>
 <p class="subtitle">Tour par tour</p>
-             
-<div class="">
-    <div class="players-status">${joueur1}</div>          
-    <div class="players-status">${joueur2}</div>
-</div>
-
+            
+    <div class="players-status">${joueur1} ${joueur2}</div>          
+ 
 <div class="question-text">${question}</div>
 <div>
     <div class="options-grid">${option}</div>

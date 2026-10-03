@@ -129,7 +129,13 @@ export class Quiz {
      * @param {number} indexSelectionne
      */
     repondre(indexSelectionne) {
+        this.#reponsesChoisies[this.#indexQuestionActuelle] = indexSelectionne;
+        this.#estRepondu = true;
+        if (this.questionActuelle.estCorrect(indexSelectionne)) {
+            this.#joueurs[this.#indexJoueurActuel].ajouterPoint();
+        }
 
+        this.#rafraichirAffichage()
     }
 
     /**
@@ -137,7 +143,17 @@ export class Quiz {
      * Termine le quiz si on était à la dernière question.
      */
     suivant() {
+       if(this.#indexQuestionActuelle===this.totalQuestions-1){
+           this.#estTermine =true;
+       }
+       else {
+           this.#indexQuestionActuelle++;
+           this.#estTermine =false;
+       }
+       this.#indexJoueurActuel=1-this.#indexJoueurActuel;
+       this.#estRepondu = false;
 
+       this.#rafraichirAffichage();
 
     }
 

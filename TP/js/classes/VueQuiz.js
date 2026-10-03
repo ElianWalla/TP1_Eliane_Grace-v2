@@ -10,7 +10,7 @@ import {
     TEMPLATE_QUIZ,
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
-import {Quiz} from "./Quiz.js"
+import {Quiz} from  "./Quiz.js"
 import {Joueur} from  "./Joueur.js"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
@@ -70,7 +70,6 @@ export class VueQuiz {
 
         });
 
-
         const champJoueur1 = this.#conteneur.querySelector('#player1');
         const champJoueur2 = this.#conteneur.querySelector('#player2');
 
@@ -80,8 +79,6 @@ export class VueQuiz {
         if (champJoueur2 && this.#nomsJoueurs[1]) {
             champJoueur2.value = this.#nomsJoueurs[1];
         }
-
-
 
     }
 
@@ -102,9 +99,7 @@ export class VueQuiz {
         }
 
         // Construction des Badges joueurs
-        let activePlayer;
-
-        activePlayer = quiz.indexJoueurActuel === quiz.joueurs[0];
+       let  activePlayer = quiz.indexJoueurActuel === quiz.joueurs[0];
 
         const firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
@@ -112,10 +107,10 @@ export class VueQuiz {
             quiz.joueurActuel.getScore
         );
 
-        activePlayer = quiz.indexJoueurActuel === quiz.joueurs[1];
+      let activePlayer2 = quiz.indexJoueurActuel === quiz.joueurs[1];
 
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
-            activePlayer,
+            activePlayer2,
             quiz.autreJoueur.getNom,
             quiz.autreJoueur.getScore
         );
@@ -128,10 +123,11 @@ export class VueQuiz {
             htmlOptions
         );
 
+
         //TODO La correction des reponses et l'affichage de la question suivante
 
         document.getElementById('nextBtn').addEventListener('click', (ev) => {
-                handleQuestionSuivante(ev, this)
+                handleQuestionSuivante(ev, this.#quiz)
             }
         );
     }
@@ -184,7 +180,7 @@ export class VueQuiz {
         this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(nom, score, winner, icone);
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
-                handleRecommancer(ev, this.#quiz)
+                handleRecommancer(ev, quiz)
             }
         );
     }
