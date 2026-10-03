@@ -98,30 +98,20 @@ export class VueQuiz {
         }
 
         // Construction des Badges joueurs
-        let sousTitre = ``;
-
-       let  activePlayer = (quiz.indexJoueurActuel === quiz.joueurs[0]);
-        if (activePlayer === true) {
-            sousTitre = `<p class="subtitle">🎯 À vous !</p>`;
-        }
+        let activePlayer = (quiz.indexJoueurActuel === 0);
+        let activePlayer2 = (quiz.indexJoueurActuel === 1);
 
         const firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
             quiz.joueurActuel.getNom,
-            quiz.joueurActuel.getScore,
-            sousTitre
+            quiz.joueurActuel.getScore
         );
 
-      let activePlayer2 = (quiz.indexJoueurActuel === quiz.joueurs[1]);
-      if (activePlayer2 === true) {
-          sousTitre = `<p class="subtitle">🎯 À vous !</p>`;
-      }
 
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer2,
             quiz.autreJoueur.getNom,
-            quiz.autreJoueur.getScore,
-            sousTitre
+            quiz.autreJoueur.getScore
         );
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
@@ -149,30 +139,38 @@ export class VueQuiz {
         const joueur1 = quiz.joueurActuel;
         const joueur2 = quiz.autreJoueur;
 
-        let scoreJoueur1 = quiz.joueurActuel.getScore;
-        let scoreJoueur2 = quiz.autreJoueur.getScore;
+        let scoreJoueur1 = joueur1.getScore;
+        let scoreJoueur2 = joueur2.getScore;
 
         let nom = "";
-        let score = 0;
+        let message = "";
         let winner = false;
-        let icone = '';
+        let icone = '🏆';
+
+        let gagnant;
+        let perdant;
 
         if (scoreJoueur1 === scoreJoueur2 + 2) {
 
             nom = joueur1.getNom();
-            score = scoreJoueur1;
             winner = true;
-            icone = '&#127942;';
+            message = icone + ' ' + nom + " remporte la partie !";
+
+            gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, winner, icone);
+            perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, false, '');
 
         } else if (scoreJoueur2 === scoreJoueur1 + 2) {
 
             nom = joueur2.getNom();
-            score = scoreJoueur2;
             winner = true;
-            icone = '&#127942;';
+            message = icone + ' ' + nom + " remporte la partie !";
+
+            gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, winner, icone);
+            perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, false, '');
        }
 
-        this.#conteneur.innerHTML = TEMPLATE_JOUEUR_RESULTAT(nom, score, winner, icone);
+        let verdict = [gagnant,perdant];
+        this.#conteneur.innerHTML = TEMPLATE_RESULTAT(verdict, message);
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, quiz)
