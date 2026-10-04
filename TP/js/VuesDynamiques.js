@@ -42,8 +42,7 @@ export const TEMPLATE_QUIZ = (joueur1, joueur2, question, option) => `
 <h1>🧠 Quiz </h1>
 <p class="subtitle">Tour par tour</p>
             
-    <div class="players-status">${joueur1} ${joueur2}</div>          
- 
+<div class="players-status">${joueur1} ${joueur2}</div>     
 <div class="question-text">${question}</div>
 <div>
     <div class="options-grid">${option}</div>

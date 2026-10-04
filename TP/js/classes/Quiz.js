@@ -2,7 +2,7 @@ import {Joueur} from './Joueur.js';
 import {Question} from './Question.js'
 
 
-const DIFFERENCE_DE_SCORE_POUR_GAGNER = 2;
+export const DIFFERENCE_DE_SCORE_POUR_GAGNER = 2;
 
 /**
  * Classe Quiz

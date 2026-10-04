@@ -10,8 +10,7 @@ import {
     TEMPLATE_QUIZ,
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
-import {Quiz} from  "./Quiz.js"
-import {Joueur} from  "./Joueur.js"
+import {DIFFERENCE_DE_SCORE_POUR_GAGNER, Quiz} from  "./Quiz.js"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
 /**
@@ -67,7 +66,6 @@ export class VueQuiz {
         this.#conteneur.innerHTML = TEMPLATE_BIENVENUE;
         document.getElementById('startBtn').addEventListener('click', (ev) => {
         handleDemarrer(ev, this)
-
         });
 
         const champJoueur1 = this.#conteneur.querySelector('#player1');
@@ -79,7 +77,6 @@ export class VueQuiz {
         if (champJoueur2 && this.#nomsJoueurs[1]) {
             champJoueur2.value = this.#nomsJoueurs[1];
         }
-
     }
 
     // ---------- Écran de quiz ----------
@@ -99,18 +96,21 @@ export class VueQuiz {
         }
 
         // Construction des Badges joueurs
+        let player1 = quiz.joueurs[0];
+        let player2 = quiz.joueurs[1];
+
         let activePlayer = quiz.indexJoueurActuel === 0;
         let firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
-            quiz.joueurs[0].getNom,
-            quiz.joueurs[0].getScore
+            player1.getNom,
+            player1.getScore
         );
 
         let activePlayer2 = quiz.indexJoueurActuel === 1;
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer2,
-            quiz.joueurs[1].getNom,
-            quiz.joueurs[1].getScore
+            player2.getNom,
+            player2.getScore
         );
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
@@ -121,23 +121,28 @@ export class VueQuiz {
             htmlOptions
         );
 
+        while ((player1.getScore === player2.getScore + DIFFERENCE_DE_SCORE_POUR_GAGNER) ||
+            (player2.getScore === player1.getScore + DIFFERENCE_DE_SCORE_POUR_GAGNER)) {
 
-        //TODO La correction des reponses et l'affichage de la question suivante
-
-        document.getElementById('nextBtn').addEventListener('click', (ev) => {
-                handleQuestionSuivante(ev, this.#quiz)
-            }
-        );
+            quiz.estTermine = true;
+        }
 
         const options = this.#conteneur.querySelectorAll('.option-btn');
-        options.forEach((options) =>{
-            options.addEventListener('click' ,(ev) =>{
-                handleChoixDeReponse(ev,quiz);
+        options.forEach((options) => {
+            options.addEventListener('click' ,(ev) => {
+
+                if (estRepondu === false) {
+                    handleChoixDeReponse(ev,quiz);
+                }
             })
         });
 
-
-
+        if (estRepondu) {
+            document.getElementById('nextBtn').addEventListener('click', (ev) => {
+                    handleQuestionSuivante(ev, quiz)
+                }
+            );
+        }
     }
 
 
@@ -156,10 +161,12 @@ export class VueQuiz {
         let winner = false;
         let icone = '🏆';
 
+        let whoWinned = quiz.gagnant;
+
         let gagnant;
         let perdant;
 
-        if (scoreJoueur1 === scoreJoueur2 + 2) {
+        if (whoWinned === joueur1) {
 
             nom = joueur1.getNom();
             winner = true;
@@ -168,9 +175,7 @@ export class VueQuiz {
             gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, winner, icone);
             perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, false, '');
 
-            quiz.estTermine;
-
-        } else if (scoreJoueur2 === scoreJoueur1 + 2) {
+        } else if (whoWinned === joueur2) {
 
             nom = joueur2.getNom();
             winner = true;
@@ -178,8 +183,6 @@ export class VueQuiz {
 
             gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, winner, icone);
             perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, false, '');
-
-            quiz.estTermine;
        }
 
         let verdict = [gagnant,perdant];
