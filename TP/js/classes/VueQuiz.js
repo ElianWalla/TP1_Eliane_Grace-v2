@@ -149,14 +149,14 @@ export class VueQuiz {
     // ---------- Écran de résultat ----------
     #afficheResultat() {
         const quiz = this.#quiz;
-
         const joueur1 = quiz.joueurs[0];
         const joueur2 = quiz.joueurs[1];
 
         let scoreJoueur1 = joueur1.getScore;
         let scoreJoueur2 = joueur2.getScore;
+        let nomJoueur1 = quiz.nomsJoueurs[0];
+        let nomJoueur2 = quiz.nomsJoueurs[1];
 
-        let nom = "";
         let message = "";
         let winner = false;
         let icone = '🏆';
@@ -168,21 +168,19 @@ export class VueQuiz {
 
         if (whoWinned === joueur1) {
 
-            nom = joueur1.getNom();
             winner = true;
-            message = icone + ' ' + nom + " remporte la partie !";
+            message = icone + ' ' + nomJoueur1 + " remporte la partie !";
 
-            gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, winner, icone);
-            perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, false, '');
+            gagnant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, winner, icone);
+            perdant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur2, scoreJoueur2, false, '');
 
         } else if (whoWinned === joueur2) {
 
-            nom = joueur2.getNom();
             winner = true;
-            message = icone + ' ' + nom + " remporte la partie !";
+            message = icone + ' ' + nomJoueur2 + " remporte la partie !";
 
-            gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, winner, icone);
-            perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, false, '');
+            gagnant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur2, scoreJoueur2, winner, icone);
+            perdant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, false, '');
        }
 
         let verdict = [gagnant,perdant];
