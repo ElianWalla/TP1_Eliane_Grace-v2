@@ -2,7 +2,7 @@ import {Joueur} from './Joueur.js';
 import {Question} from './Question.js'
 
 
-const DIFFERENCE_DE_SCORE_POUR_GAGNER = 2;
+export const DIFFERENCE_DE_SCORE_POUR_GAGNER = 2;
 
 /**
  * Classe Quiz
@@ -134,8 +134,15 @@ export class Quiz {
         if (this.questionActuelle.estCorrect(indexSelectionne)) {
             this.#joueurs[this.#indexJoueurActuel].ajouterPoint();
         }
+        // comparaison des scores des joueurs avec la DIFFERENCE_DE_SCORE_POUR_GAGNER et deduire le gagnant
+        if((this.#joueurs[0].getScore === this.#joueurs[1].getScore + DIFFERENCE_DE_SCORE_POUR_GAGNER) ||
+        (this.#joueurs[1].getScore === this.#joueurs[0].getScore + DIFFERENCE_DE_SCORE_POUR_GAGNER)) {
 
-        this.#rafraichirAffichage()
+            this.#estTermine = true;
+
+        }
+
+    this.#rafraichirAffichage()
     }
 
     /**
@@ -143,17 +150,17 @@ export class Quiz {
      * Termine le quiz si on était à la dernière question.
      */
     suivant() {
-       if(this.#indexQuestionActuelle===this.totalQuestions-1){
-           this.#estTermine =true;
-       }
-       else {
-           this.#indexQuestionActuelle++;
-           this.#estTermine =false;
-       }
-       this.#indexJoueurActuel=1-this.#indexJoueurActuel;
-       this.#estRepondu = false;
+        if(this.#indexQuestionActuelle===this.totalQuestions-1){
+            this.#estTermine =true;
+        }
+        else {
+            this.#indexQuestionActuelle++;
+            this.#estTermine =false;
+        }
+        this.#indexJoueurActuel=1-this.#indexJoueurActuel;
+        this.#estRepondu = false;
 
-       this.#rafraichirAffichage();
+        this.#rafraichirAffichage();
 
     }
 

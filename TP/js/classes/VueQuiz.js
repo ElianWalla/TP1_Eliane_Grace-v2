@@ -11,7 +11,6 @@ import {
     TEMPLATE_JOUEUR_RESULTAT,
 } from "../VuesDynamiques.js";
 import {Quiz} from  "./Quiz.js"
-import {Joueur} from  "./Joueur.js"
 import {handleDemarrer, handleQuestionSuivante, handleRecommancer, handleChoixDeReponse} from "../evenements.js";
 
 /**
@@ -66,8 +65,7 @@ export class VueQuiz {
     #afficheBienvenue() {
         this.#conteneur.innerHTML = TEMPLATE_BIENVENUE;
         document.getElementById('startBtn').addEventListener('click', (ev) => {
-        handleDemarrer(ev, this)
-
+            handleDemarrer(ev, this)
         });
 
         const champJoueur1 = this.#conteneur.querySelector('#player1');
@@ -79,7 +77,6 @@ export class VueQuiz {
         if (champJoueur2 && this.#nomsJoueurs[1]) {
             champJoueur2.value = this.#nomsJoueurs[1];
         }
-
     }
 
     // ---------- Écran de quiz ----------
@@ -99,18 +96,21 @@ export class VueQuiz {
         }
 
         // Construction des Badges joueurs
+        let player1 = quiz.joueurs[0];
+        let player2 = quiz.joueurs[1];
+
         let activePlayer = quiz.indexJoueurActuel === 0;
         let firstPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer,
-            quiz.joueurs[0].getNom,
-            quiz.joueurs[0].getScore
+            player1.getNom,
+            player1.getScore
         );
 
         let activePlayer2 = quiz.indexJoueurActuel === 1;
         const secondPlayer = TEMPLATE_BADGE_JOUEUR(
             activePlayer2,
-            quiz.joueurs[1].getNom,
-            quiz.joueurs[1].getScore
+            player2.getNom,
+            player2.getScore
         );
 
         // Construction du Quiz avec htmlOptions et les Badges des joueurs
@@ -121,73 +121,67 @@ export class VueQuiz {
             htmlOptions
         );
 
-
-        //TODO La correction des reponses et l'affichage de la question suivante
-
-        document.getElementById('nextBtn').addEventListener('click', (ev) => {
-                handleQuestionSuivante(ev, this.#quiz)
-            }
-        );
-
         const options = this.#conteneur.querySelectorAll('.option-btn');
-        options.forEach((options) =>{
-            options.addEventListener('click' ,(ev) =>{
-                handleChoixDeReponse(ev,quiz);
+        options.forEach((options) => {
+            options.addEventListener('click' ,(ev) => {
+
+                if (estRepondu === false) {
+                    handleChoixDeReponse(ev,quiz);
+                }
             })
         });
 
-
-
+        if (estRepondu) {
+            document.getElementById('nextBtn').addEventListener('click', (ev) => {
+                    handleQuestionSuivante(ev, quiz)
+                }
+            );
+        }
     }
 
 
     // ---------- Écran de résultat ----------
     #afficheResultat() {
         const quiz = this.#quiz;
-
         const joueur1 = quiz.joueurs[0];
         const joueur2 = quiz.joueurs[1];
 
         let scoreJoueur1 = joueur1.getScore;
         let scoreJoueur2 = joueur2.getScore;
+        let nomJoueur1 = this.#nomsJoueurs[0];
+        let nomJoueur2 = this.#nomsJoueurs[1];
 
-        let nom = "";
         let message = "";
         let winner = false;
         let icone = '🏆';
 
+        let whoWinned = quiz.gagnant;
+
         let gagnant;
         let perdant;
 
-        if (scoreJoueur1 === scoreJoueur2 + 2) {
+        if (whoWinned === joueur1) {
 
-            nom = joueur1.getNom();
             winner = true;
-            message = icone + ' ' + nom + " remporte la partie !";
+            message = icone + ' ' + nomJoueur1 + " remporte la partie !";
 
-            gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, winner, icone);
-            perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, false, '');
+            gagnant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, winner, icone);
+            perdant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur2, scoreJoueur2, false, '');
 
-            quiz.estTermine;
+        } else if (whoWinned === joueur2) {
 
-        } else if (scoreJoueur2 === scoreJoueur1 + 2) {
-
-            nom = joueur2.getNom();
             winner = true;
-            message = icone + ' ' + nom + " remporte la partie !";
+            message = icone + ' ' + nomJoueur2 + " remporte la partie !";
 
-            gagnant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur2, winner, icone);
-            perdant = TEMPLATE_JOUEUR_RESULTAT(nom, scoreJoueur1, false, '');
-
-            quiz.estTermine;
-       }
+            gagnant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur2, scoreJoueur2, winner, icone);
+            perdant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, false, '');
+        }
 
         let verdict = [gagnant,perdant];
         this.#conteneur.innerHTML = TEMPLATE_RESULTAT(verdict, message);
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, quiz)
-                quiz.reinitialiser()
             }
         );
     }
