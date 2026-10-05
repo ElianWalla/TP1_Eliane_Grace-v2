@@ -165,7 +165,7 @@ export class VueQuiz {
             winner = true;
             message = icone + ' ' + nomJoueur1 + " remporte la partie !";
 
-            gagnant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, winner, icone);
+            gagnant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, winner, '');
             perdant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur2, scoreJoueur2, false, '');
 
         } else if (whoWinned === joueur2) {
@@ -177,8 +177,7 @@ export class VueQuiz {
             perdant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, false, '');
        }
 
-        let verdict = [gagnant,perdant];
-        this.#conteneur.innerHTML = TEMPLATE_RESULTAT(verdict, message);
+        this.#conteneur.innerHTML = TEMPLATE_RESULTAT(gagnant, perdant, message);
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, quiz)

@@ -57,17 +57,16 @@ export const TEMPLATE_JOUEUR_RESULTAT = (nom, score, estGagnant, htmlIcones) => 
     <div class="result-player ${estGagnant ? 'winner' : ''}">
         <div class="name">${nom}</div>
         <div class="score">${score}</div>
-        ${htmlIcones}
     </div>
 `;
 
-export const TEMPLATE_RESULTAT = (htmlJoueurs, messageGagnant) => `
+export const TEMPLATE_RESULTAT = (htmlGagnant, htmlPerdant, messageGagnant) => `
     <h1>🧠 Quiz</h1>
     <p class="subtitle">Résultat final</p>
 
     <div class="result-container">
         <div class="result-message">${messageGagnant}</div>
-        <div class="result-score">${htmlJoueurs}</div>
+        <div class="result-score">${htmlGagnant} ${htmlPerdant}</div>
         <button class="btn btn-restart" id="restartBtn">🔄 Nouvelle partie </button>
     </div>
 `;
