@@ -65,7 +65,7 @@ export class VueQuiz {
     #afficheBienvenue() {
         this.#conteneur.innerHTML = TEMPLATE_BIENVENUE;
         document.getElementById('startBtn').addEventListener('click', (ev) => {
-            handleDemarrer(ev, this)
+        handleDemarrer(ev, this)
         });
 
         const champJoueur1 = this.#conteneur.querySelector('#player1');
@@ -175,13 +175,14 @@ export class VueQuiz {
 
             gagnant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur2, scoreJoueur2, winner, icone);
             perdant = TEMPLATE_JOUEUR_RESULTAT(nomJoueur1, scoreJoueur1, false, '');
-        }
+       }
 
         let verdict = [gagnant,perdant];
         this.#conteneur.innerHTML = TEMPLATE_RESULTAT(verdict, message);
 
         document.getElementById('restartBtn').addEventListener('click', (ev) => {
                 handleRecommancer(ev, quiz)
+                quiz.reinitialiser()
             }
         );
     }
